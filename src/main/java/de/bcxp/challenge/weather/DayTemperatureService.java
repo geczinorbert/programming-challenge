@@ -10,7 +10,12 @@ public class DayTemperatureService {
         this.dayTemperatureRepository = dayTemperatureRepository;
     }
 
-    public int getColdestDayOfTheMonth(String fileName) {
+    /**
+     * Return the day of the Month which has the smallest spread in temperature
+     * @param fileName
+     * @return
+     */
+    public int getDayWithSmallestSpread(String fileName) {
         List<DayTemperature> dayTemperatures = dayTemperatureRepository.getDayTemperaturesFromFile(fileName);
         int minIndex = 0;
         for(int i=1; i < dayTemperatures.size(); ++i){
