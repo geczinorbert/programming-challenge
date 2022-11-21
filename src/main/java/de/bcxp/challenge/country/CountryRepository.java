@@ -1,6 +1,9 @@
 package de.bcxp.challenge.country;
 
 import de.bcxp.challenge.util.CustomFileReader;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CountryRepository {
+
+    private static final Logger logger = LogManager.getLogger(CountryRepository.class);
 
     /**
      * Method to retrieve DayTemperature data from the given filename
@@ -33,18 +38,49 @@ public class CountryRepository {
      * Convert given string parameters to class attributes
      *
      * @param name       the name of the country of type String need to remove brace and white spaces
-     * @param population the population of the country of type String needs to be converted to double and fix dot to comma
-     * @param density    the density of the country of type String needs to be converted to double and fix dot to comma
+     * @param population the population of the country
+     * @param density    the density of the country
      * @return the new country object
      */
     private Country mapToCountry(String name, String population, String density) {
         String nameParsed = name.replaceAll("\\[", "")
                 .replaceAll("\\s+", "");
-        double populationParsed = Double.parseDouble(population.replaceAll("\\s+", "")
-                .replaceAll("\\.", ","));
-        double densityParsed = Double.parseDouble(density.replaceAll("\\s+", "")
-                .replaceAll("\\.", ","));
+        double populationParsed = convertStringToDouble(population);
+        double densityParsed = convertStringToDouble(density);
 
         return new Country(nameParsed, populationParsed, densityParsed);
+    }
+
+    /**
+     * Added number conversion for special cases like 11.222.333,44 and 11,222,333.44
+     *
+     * @param value the given string to be converted
+     * @return the converted string or log an error
+     */
+    private double convertStringToDouble(String value){
+        double convertedValue = 0;
+        try {
+            convertedValue = Double.parseDouble(value.replaceAll("\\s+", "")
+                    .replaceAll("]", ""));
+        }
+        catch (NumberFormatException e){
+            int numberOfDots = StringUtils.countMatches(value,".");
+            int numberOfCommas = StringUtils.countMatches(value,",");
+            if(numberOfDots > 1 && numberOfCommas > 1){
+                logger.error("Can't convert to double invalid input: " + value);
+            }
+            if(numberOfDots > 1 && numberOfCommas == 1){
+                convertedValue = Double.parseDouble(value.replaceAll("\\.","")
+                        .replaceAll(",",".")
+                        .replaceAll("\\s+", ""));
+            }
+            if(numberOfDots == 1 && numberOfCommas > 1){
+                convertedValue = Double.parseDouble(value.replaceAll(",","")
+                        .replaceAll("\\s+", ""));
+            }
+
+        }
+
+        return convertedValue;
     }
 }
