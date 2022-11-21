@@ -26,15 +26,15 @@ public class DayTemperatureServiceTest {
     public void getColdestDayOfTheMonthTest() {
         String fileName = "anything";
 
-        DayTemperature dayTemperature1 = new DayTemperature(1,88,59);
-        DayTemperature dayTemperature2 = new DayTemperature(2,79,63);
-        DayTemperature dayTemperature3= new DayTemperature(3,77,55);
-        DayTemperature dayTemperature4 = new DayTemperature(4,77,59);
+        DayTemperature dayTemperature1 = new DayTemperature(1, 88, 59);
+        DayTemperature dayTemperature2 = new DayTemperature(2, 79, 63);
+        DayTemperature dayTemperature3 = new DayTemperature(3, 77, 55);
+        DayTemperature dayTemperature4 = new DayTemperature(4, 77, 59);
 
         List<DayTemperature> dayTemperatureList = List.of(dayTemperature1, dayTemperature2, dayTemperature3, dayTemperature4);
         Mockito.when(dayTemperatureRepository.getDayTemperaturesFromFile(Mockito.any())).thenReturn(dayTemperatureList);
 
         int coldestDayOfTheMonth = dayTemperatureService.getDayWithSmallestSpread(fileName);
-        assertEquals(2,coldestDayOfTheMonth);
+        assertEquals(2, coldestDayOfTheMonth);
     }
 }

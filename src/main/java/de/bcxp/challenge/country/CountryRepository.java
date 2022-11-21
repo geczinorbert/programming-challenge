@@ -23,10 +23,10 @@ public class CountryRepository {
     public List<Country> getCountriesFromFile(String fileName) {
         List<Country> countries = new ArrayList<>();
         // read from file
-        List<String[]> r = CustomFileReader.readStringArrayFromFile(fileName);
+        List<String[]> result = CustomFileReader.readStringArrayFromFile(fileName);
         //iterate over every line
-        for (String[] strings : r) {
-            List<String> line = Arrays.stream(Arrays.toString(strings)
+        for (String[] stringLine : result) {
+            List<String> line = Arrays.stream(Arrays.toString(stringLine)
                             .split(";"))
                     .collect(Collectors.toList());
             countries.add(mapToCountry(line.get(0), line.get(3), line.get(4)));
@@ -57,25 +57,24 @@ public class CountryRepository {
      * @param value the given string to be converted
      * @return the converted string or log an error
      */
-    private double convertStringToDouble(String value){
+    private double convertStringToDouble(String value) {
         double convertedValue = 0;
         try {
             convertedValue = Double.parseDouble(value.replaceAll("\\s+", "")
                     .replaceAll("]", ""));
-        }
-        catch (NumberFormatException e){
-            int numberOfDots = StringUtils.countMatches(value,".");
-            int numberOfCommas = StringUtils.countMatches(value,",");
-            if(numberOfDots > 1 && numberOfCommas > 1){
+        } catch (NumberFormatException e) {
+            int numberOfDots = StringUtils.countMatches(value, ".");
+            int numberOfCommas = StringUtils.countMatches(value, ",");
+            if (numberOfDots > 1 && numberOfCommas > 1) {
                 logger.error("Can't convert to double invalid input: " + value);
             }
-            if(numberOfDots > 1 && numberOfCommas == 1){
-                convertedValue = Double.parseDouble(value.replaceAll("\\.","")
-                        .replaceAll(",",".")
+            if (numberOfDots > 1 && numberOfCommas == 1) {
+                convertedValue = Double.parseDouble(value.replaceAll("\\.", "")
+                        .replaceAll(",", ".")
                         .replaceAll("\\s+", ""));
             }
-            if(numberOfDots == 1 && numberOfCommas > 1){
-                convertedValue = Double.parseDouble(value.replaceAll(",","")
+            if (numberOfDots == 1 && numberOfCommas > 1) {
+                convertedValue = Double.parseDouble(value.replaceAll(",", "")
                         .replaceAll("\\s+", ""));
             }
 

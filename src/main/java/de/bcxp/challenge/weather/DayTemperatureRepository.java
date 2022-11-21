@@ -19,10 +19,10 @@ public class DayTemperatureRepository {
     public List<DayTemperature> getDayTemperaturesFromFile(String fileName) {
         List<DayTemperature> dayTemperatures = new ArrayList<>();
         // read from file
-        List<String[]> r = CustomFileReader.readStringArrayFromFile(fileName);
+        List<String[]> result = CustomFileReader.readStringArrayFromFile(fileName);
         //iterate over every line
-        for (String[] strings : r) {
-            List<String> line = Arrays.stream(Arrays.toString(strings)
+        for (String[] stringLine : result) {
+            List<String> line = Arrays.stream(Arrays.toString(stringLine)
                             .split(","))
                     .collect(Collectors.toList());
             dayTemperatures.add(mapToDayTemperature(line.get(0), line.get(1), line.get(2)));
