@@ -1,5 +1,7 @@
 package de.bcxp.challenge;
 
+import de.bcxp.challenge.country.CountryRepository;
+import de.bcxp.challenge.country.CountryService;
 import de.bcxp.challenge.weather.DayTemperatureRepository;
 import de.bcxp.challenge.weather.DayTemperatureService;
 
@@ -16,13 +18,16 @@ public final class App {
     public static void main(String... args) {
 
         // Your preparation code …
-        String fileName = "src\\main\\resources\\de\\bcxp\\challenge\\weather.csv";
+        String fileNameWeather = "src\\main\\resources\\de\\bcxp\\challenge\\weather.csv";
         DayTemperatureRepository dayTemperatureRepository = new DayTemperatureRepository();
         DayTemperatureService dayTemperatureService = new DayTemperatureService(dayTemperatureRepository);
-        int dayWithSmallestTempSpread = dayTemperatureService.getDayWithSmallestSpread(fileName);     // Your day analysis function call …
+        int dayWithSmallestTempSpread = dayTemperatureService.getDayWithSmallestSpread(fileNameWeather);     // Your day analysis function call …
         System.out.printf("Day with smallest temperature spread: %s%n", dayWithSmallestTempSpread);
 
-        String countryWithHighestPopulationDensity = "Some country"; // Your population density analysis function call …
+        String fileNameCountry = "src\\main\\resources\\de\\bcxp\\challenge\\countries.csv";
+        CountryRepository countryRepository = new CountryRepository();
+        CountryService countryService = new CountryService(countryRepository);
+        String countryWithHighestPopulationDensity = countryService.getMostPopulatedCountry(fileNameCountry); // Your population density analysis function call …
         System.out.printf("Country with highest population density: %s%n", countryWithHighestPopulationDensity);
     }
 }

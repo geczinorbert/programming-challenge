@@ -15,7 +15,7 @@ public class CountryRepository {
      * @param fileName the name of the file to be read from
      * @return the List of countries
      */
-    public List<Country> getMostPopulatedCountry(String fileName) {
+    public List<Country> getCountriesFromFile(String fileName) {
         List<Country> countries = new ArrayList<>();
         // read from file
         List<String[]> r = CustomFileReader.readStringArrayFromFile(fileName);

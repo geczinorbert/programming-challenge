@@ -16,6 +16,10 @@ public class Country {
         this.area = area;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public double getDensity(){
         return population / area;
     }
