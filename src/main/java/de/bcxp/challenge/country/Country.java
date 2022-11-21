@@ -16,6 +16,9 @@ public class Country {
         this.area = area;
     }
 
+    public double getDensity(){
+        return population / area;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
