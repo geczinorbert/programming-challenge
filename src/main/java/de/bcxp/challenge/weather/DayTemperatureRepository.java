@@ -46,13 +46,15 @@ public class DayTemperatureRepository {
      * Convert parameter data into DayTemperature object
      * @param dayOfTheMonth the day of the month in String format need to remove array clause and whitespaces
      * @param maxTemp the maximum Temperature of the day in String format need to remove whitespaces
-     * @param minTemp the minimum Temperature of the day in String format need to remove whitespaces
+     * @param minTemp the minimum Temperature of the day in String format need array clause and to remove whitespaces
      * @return the new DayTemperature object
      */
     private DayTemperature mapToDayTemperature(String dayOfTheMonth, String maxTemp, String minTemp){
-        int dayOfTheMonthParsed = Integer.parseInt(dayOfTheMonth.substring(1).replaceAll("\\s+",""));
+        int dayOfTheMonthParsed = Integer.parseInt(dayOfTheMonth.replaceAll("\\[","")
+                .replaceAll("\\s+",""));
         int maxTempParsed = Integer.parseInt(maxTemp.replaceAll("\\s+",""));
-        int minTempParsed = Integer.parseInt(minTemp.replaceAll("\\s+",""));
+        int minTempParsed = Integer.parseInt(minTemp.replaceAll("\\s+","")
+                .replaceAll("]",""));
         return new DayTemperature(dayOfTheMonthParsed, maxTempParsed, minTempParsed);
     }
 }
