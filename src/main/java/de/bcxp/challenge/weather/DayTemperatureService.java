@@ -11,7 +11,13 @@ public class DayTemperatureService {
     }
 
     public int getColdestDayOfTheMonth(String fileName) {
-        List<DayTemperature> dayTemperaturesFromFile = dayTemperatureRepository.getDayTemperaturesFromFile(fileName);
-        return 0;
+        List<DayTemperature> dayTemperatures = dayTemperatureRepository.getDayTemperaturesFromFile(fileName);
+        int minIndex = 0;
+        for(int i=1; i < dayTemperatures.size(); ++i){
+            if(dayTemperatures.get(i).getTemperatureDifference() < dayTemperatures.get(minIndex).getTemperatureDifference()){
+                minIndex = i;
+            }
+        }
+        return dayTemperatures.get(minIndex).getDayOfTheMonth();
     }
 }
