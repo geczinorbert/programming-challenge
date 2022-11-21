@@ -24,7 +24,7 @@ public class DayTemperatureServiceTest {
 
     @Test
     public void getColdestDayOfTheMonthTest() {
-        String fileName = "src\\test\\java\\de\\bcxp\\challenge\\resources\\weatherTest.csv";
+        String fileName = "anything";
 
         DayTemperature dayTemperature1 = new DayTemperature(1,88,59);
         DayTemperature dayTemperature2 = new DayTemperature(2,79,63);
